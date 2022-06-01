@@ -1,6 +1,7 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 
-const Formulario = ({ agregar}) => {
+const Formulario = ({ agregar }) => {
 
     const [stock, setStock] = React.useState()
     const [contexto, setContexto] = React.useState()
@@ -9,7 +10,14 @@ const Formulario = ({ agregar}) => {
     function Agregar(e) {
         e.preventDefault();
         if (stock && producto.trim().length > 0) {
-            agregar({ producto: producto, stock: stock,contexto:contexto })
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Agregando',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            agregar({ producto: producto, stock: stock, contexto: contexto })
             setStock('')
             setContexto('')
             setProducto('')
@@ -29,7 +37,7 @@ const Formulario = ({ agregar}) => {
                     <input value={contexto} className="form-control" type="text" id="formFile" placeholder='Descripcion' onChange={(e) => setContexto(e.target.value)} />
                 </div>
                 <div className="form-group col-2 m-2 mt-4">
-                    <input type="number" className="form-control " value={stock} onChange={(e) => setStock(e.target.value)} placeholder='Titulo de la obra' />
+                    <input type="number" className="form-control " value={stock} onChange={(e) => setStock(e.target.value)} placeholder='Stock' />
                 </div>
                 <button type="submit" className="m-5 mt-4 btn btn-outline-success">Agregar</button>
             </form>

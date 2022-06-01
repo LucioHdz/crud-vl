@@ -1,16 +1,35 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 
 const Card = ({ data, actualizar, eliminar }) => {
-  const {id, producto, stock, contexto} = data
+  const { id, producto, stock, contexto } = data
   const disminuir = () => {
     const obj = {
       id: id,
       producto: producto,
       stock: stock - 1,
-      contexto:contexto
+      contexto: contexto
     }
     if (parseInt(obj.stock) <= 0) {
-      eliminar(id)
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: "Esto eliminara el producto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText:'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Eliminado!',
+            '',
+            'success'
+          )
+          eliminar(id)
+        }
+      })
     } else {
       actualizar(id, obj);
     }

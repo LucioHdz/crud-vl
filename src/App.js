@@ -40,6 +40,7 @@ function App() {
       id: id,
       ...data
     });
+    
     leer()
   }
 
