@@ -1,19 +1,40 @@
 import React from 'react'
 
-const Formulario = () => {
+const Formulario = ({ agregar}) => {
+
+    const [stock, setStock] = React.useState()
+    const [contexto, setContexto] = React.useState()
+    const [producto, setProducto] = React.useState()
+
+    function Agregar(e) {
+        e.preventDefault();
+        if (stock && producto.trim().length > 0) {
+            agregar({ producto: producto, stock: stock,contexto:contexto })
+            setStock('')
+            setContexto('')
+            setProducto('')
+        }
+    }
+
     return (
-        <form className='col-12 bg-dark p-4 d-flex flex-wrap'>
-            <div className='col-12 titulo d-flex justify-content-center' >
-            <h1 className='text-white'>Galeria</h1>
-            </div>
-            <div class="m-2 mt-4 col-4">
-                <input class="form-control" type="file" id="formFile"/>
-            </div>
-            <div class="form-group col-5 m-2 mt-4">
-                <input type="text" class="form-control " id="nombre" placeholder='Titulo de la obra'/>
-            </div>
-            <button type="button" class="m-5 mt-4 btn btn-outline-success">Agregar</button>
-        </form>
+        <>
+            <form className='col-12 bg-dark p-4 d-flex flex-wrap' onSubmit={Agregar}>
+                <div className='col-12 titulo d-flex justify-content-center' >
+                    <h1 className='text-white'>Productos</h1>
+                </div>
+                <div className="m-2 mt-4 col-2">
+                    <input value={producto} className="form-control" type="text" id="formFile" placeholder='Producto' onChange={(e) => setProducto(e.target.value)} />
+                </div>
+                <div className="m-2 mt-4 col-5">
+                    <input value={contexto} className="form-control" type="text" id="formFile" placeholder='Descripcion' onChange={(e) => setContexto(e.target.value)} />
+                </div>
+                <div className="form-group col-2 m-2 mt-4">
+                    <input type="number" className="form-control " value={stock} onChange={(e) => setStock(e.target.value)} placeholder='Titulo de la obra' />
+                </div>
+                <button type="submit" className="m-5 mt-4 btn btn-outline-success">Agregar</button>
+            </form>
+
+        </>
     )
 }
 
